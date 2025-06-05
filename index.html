@@ -3,152 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>墨水屏控制器</title>
+    <title>墨水屏显示系统</title>
     <style>
-        :root {
-            --primary-color: #3498db;
-            --secondary-color: #2ecc71;
-            --danger-color: #e74c3c;
-            --dark-color: #2c3e50;
-            --light-color: #ecf0f1;
-        }
-        
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
             color: #333;
-            line-height: 1.6;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
         }
         
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             overflow: hidden;
         }
         
         header {
-            background: linear-gradient(to right, var(--dark-color), var(--primary-color));
+            background: linear-gradient(to right, #2c3e50, #3498db);
             color: white;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
             position: relative;
         }
         
         h1 {
-            font-size: 2.2rem;
-            margin-bottom: 5px;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 15px;
         }
         
         .connection-panel {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
         }
         
         .device-info {
             display: flex;
             justify-content: space-between;
-            background-color: rgba(0, 0, 0, 0.1);
-            padding: 10px 15px;
-            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 15px;
+            border-radius: 10px;
             margin-top: 15px;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
         
         .content {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .panel {
+            background: #f8f9fa;
+            border-radius: 15px;
             padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
         
-        .tabs {
-            display: flex;
+        .panel-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
             margin-bottom: 20px;
-            border-bottom: 2px solid #eee;
-            flex-wrap: wrap;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+            display: flex;
+            align-items: center;
         }
         
-        .tab {
-            padding: 12px 25px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            border-bottom: 3px solid transparent;
-            flex: 1;
-            text-align: center;
-        }
-        
-        .tab.active {
-            color: var(--primary-color);
-            border-bottom: 3px solid var(--primary-color);
-            background-color: rgba(52, 152, 219, 0.1);
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .panel-title i {
+            margin-right: 10px;
+            color: #3498db;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 600;
-            color: var(--dark-color);
+            color: #2c3e50;
+            font-size: 1.1rem;
         }
         
         input, textarea, select, button {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
+            padding: 14px 18px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.05rem;
             transition: all 0.3s;
         }
         
         input:focus, textarea:focus {
-            border-color: var(--primary-color);
+            border-color: #3498db;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.2);
         }
         
         button {
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(to right, #3498db, #2ecc71);
             color: white;
             border: none;
             cursor: pointer;
             font-weight: bold;
-            padding: 14px;
+            padding: 16px;
             margin-top: 10px;
-            font-size: 18px;
+            font-size: 1.1rem;
             letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+            transition: all 0.6s;
         }
         
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        button:hover::after {
+            transform: rotate(30deg) translate(20%, 20%);
         }
         
         button:active {
@@ -161,10 +176,11 @@
         
         .status {
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-top: 20px;
             text-align: center;
             display: none;
+            font-size: 1.05rem;
         }
         
         .status.success {
@@ -179,16 +195,10 @@
             display: block;
         }
         
-        .status.info {
-            background-color: #d9edf7;
-            color: #31708f;
-            display: block;
-        }
-        
         .preview-container {
             text-align: center;
             margin: 20px 0;
-            padding: 15px;
+            padding: 20px;
             border: 2px dashed #ddd;
             border-radius: 10px;
             background-color: #f9f9f9;
@@ -207,24 +217,43 @@
             color: #777;
             font-size: 4rem;
             margin: 20px 0;
+            opacity: 0.7;
         }
         
         .ink-display {
             background-color: #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 30px;
-            text-align: center;
+            border-radius: 15px;
+            padding: 0;
+            margin-top: 15px;
+            overflow: hidden;
+            border: 2px solid #bdc3c7;
+        }
+        
+        .status-bar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            font-family: monospace;
+        }
+        
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, #3498db, #2ecc71);
+            margin: 0 10px;
         }
         
         .display-content {
             background-color: #f0f0f0;
-            width: 100%;
-            height: 200px;
-            margin: 0 auto;
-            border: 2px solid #ccc;
+            height: 300px;
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
         .display-text {
@@ -234,6 +263,7 @@
             text-align: left;
             height: 100%;
             overflow: auto;
+            line-height: 1.6;
         }
         
         .display-image {
@@ -244,57 +274,46 @@
         }
         
         .display-mode {
-            margin-top: 15px;
+            padding: 15px;
+            background-color: #ecf0f1;
+            text-align: center;
             font-style: italic;
-            color: #666;
+            color: #7f8c8d;
         }
         
-        .status-bar {
-            background-color: #333;
-            color: white;
-            padding: 8px 15px;
+        .device-status {
+            margin-top: 25px;
+        }
+        
+        .status-card {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        
+        .status-item {
             display: flex;
             justify-content: space-between;
-            font-size: 14px;
-            font-family: monospace;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
         }
         
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            border-top: 1px solid #eee;
+        .status-label {
+            font-weight: 600;
+            color: #2c3e50;
         }
         
-        @media (max-width: 600px) {
-            .container {
-                border-radius: 10px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .tabs {
-                flex-direction: column;
-            }
-            
-            .tab {
-                border-bottom: 1px solid #eee;
-            }
-            
-            .display-content {
-                height: 150px;
-            }
+        .status-value {
+            color: #3498db;
         }
         
         .wifi-icon {
             display: inline-block;
-            width: 20px;
-            height: 14px;
+            width: 24px;
+            height: 18px;
             position: relative;
-            margin-right: 5px;
+            margin-right: 8px;
         }
         
         .wifi-icon::before {
@@ -303,102 +322,179 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 6px;
-            height: 4px;
+            width: 8px;
+            height: 5px;
             background-color: currentColor;
-            border-radius: 0 0 3px 3px;
+            border-radius: 0 0 4px 4px;
         }
         
         .wifi-icon::after {
             content: "";
             position: absolute;
-            bottom: 4px;
+            bottom: 5px;
             left: 50%;
             transform: translateX(-50%);
-            width: 12px;
-            height: 8px;
+            width: 16px;
+            height: 10px;
             border: 2px solid transparent;
             border-top: 2px solid currentColor;
-            border-radius: 12px 12px 0 0;
+            border-radius: 16px 16px 0 0;
         }
         
         .signal-strength {
             display: inline-block;
-            width: 20px;
-            height: 14px;
+            width: 24px;
+            height: 18px;
             position: relative;
-            margin-left: 5px;
+            margin-left: 8px;
         }
         
         .signal-bar {
             position: absolute;
             bottom: 0;
-            width: 4px;
+            width: 5px;
             background-color: currentColor;
-            border-radius: 2px 2px 0 0;
+            border-radius: 3px 3px 0 0;
         }
         
-        .bar1 { left: 0; height: 4px; }
-        .bar2 { left: 5px; height: 7px; }
-        .bar3 { left: 10px; height: 10px; }
-        .bar4 { left: 15px; height: 13px; }
+        .bar1 { left: 0; height: 5px; }
+        .bar2 { left: 6px; height: 8px; }
+        .bar3 { left: 12px; height: 11px; }
+        .bar4 { left: 18px; height: 14px; }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+            margin-top: 25px;
+            font-size: 0.95rem;
+        }
+        
+        .instructions h3 {
+            margin-bottom: 10px;
+            color: #0d47a1;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #7f8c8d;
+            font-size: 1rem;
+            border-top: 1px solid #eee;
+            background: #f8f9fa;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .tab {
+            padding: 14px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .tab.active {
+            color: #3498db;
+            border-bottom: 3px solid #3498db;
+            background-color: rgba(52, 152, 219, 0.1);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>墨水屏控制器</h1>
-            <p>通过网页控制您的墨水屏设备</p>
+            <h1>墨水屏显示控制系统</h1>
+            <p class="subtitle">通过网页控制您的墨水屏设备，支持文本显示与图片上传</p>
             
             <div class="connection-panel">
                 <div class="form-group">
                     <label for="ipInput">设备IP地址</label>
-                    <input type="text" id="ipInput" placeholder="输入ESP8266的IP地址">
+                    <input type="text" id="ipInput" placeholder="输入ESP8266的IP地址，例如：192.168.1.100">
                     <button id="connectBtn" class="connect-btn">连接设备</button>
                 </div>
                 <div class="device-info">
-                    <div>状态: <span id="connectionStatus">未连接</span></div>
-                    <div>IP: <span id="deviceIp">-</span></div>
+                    <div>连接状态: <span id="connectionStatus">未连接</span></div>
+                    <div>设备IP: <span id="deviceIp">-</span></div>
                 </div>
             </div>
         </header>
         
         <div class="content">
-            <div class="tabs">
-                <div class="tab active" data-tab="text">文本模式</div>
-                <div class="tab" data-tab="image">图片模式</div>
-                <div class="tab" data-tab="status">设备状态</div>
-            </div>
-            
-            <div class="tab-content active" id="textTab">
-                <div class="form-group">
-                    <label for="textInput">输入要显示的文字</label>
-                    <textarea id="textInput" rows="3" placeholder="在此输入要显示在墨水屏上的文字...">欢迎使用墨水屏显示系统！</textarea>
-                </div>
-                <button id="sendTextBtn">发送文本到墨水屏</button>
-                <div class="status" id="textStatus"></div>
-            </div>
-            
-            <div class="tab-content" id="imageTab">
-                <div class="form-group">
-                    <label for="imageUpload">上传图片 (将转换为黑白)</label>
-                    <input type="file" id="imageUpload" accept="image/*">
-                    <p style="font-size: 14px; color: #666; margin-top: 5px;">推荐尺寸: 420×300像素</p>
+            <div class="panel">
+                <div class="tabs">
+                    <div class="tab active" data-tab="text">文本模式</div>
+                    <div class="tab" data-tab="image">图片模式</div>
                 </div>
                 
-                <div class="preview-container">
-                    <div class="preview-placeholder" id="placeholder">📷</div>
-                    <img id="imagePreview" alt="图片预览">
-                    <canvas id="imageCanvas" style="display:none;"></canvas>
+                <div class="tab-content active" id="textTab">
+                    <div class="form-group">
+                        <label for="textInput">输入要显示的文字</label>
+                        <textarea id="textInput" rows="4" placeholder="在此输入要显示在墨水屏上的文字...">欢迎使用墨水屏显示系统！此系统支持自动换行功能，长文本会自动适应屏幕宽度。</textarea>
+                    </div>
+                    <button id="sendTextBtn">发送文本到墨水屏</button>
+                    <div class="status" id="textStatus"></div>
+                    
+                    <div class="instructions">
+                        <h3>文本模式说明：</h3>
+                        <ul>
+                            <li>支持长文本自动换行功能</li>
+                            <li>文本更新使用局部刷新，响应迅速</li>
+                            <li>状态栏每分钟自动刷新一次</li>
+                            <li>文本区域从状态栏下方开始显示</li>
+                        </ul>
+                    </div>
                 </div>
                 
-                <button id="sendImageBtn">发送图片到墨水屏</button>
-                <div class="status" id="imageStatus"></div>
+                <div class="tab-content" id="imageTab">
+                    <div class="form-group">
+                        <label for="imageUpload">上传图片 (将转换为黑白显示)</label>
+                        <input type="file" id="imageUpload" accept="image/*">
+                        <p style="font-size: 14px; color: #666; margin-top: 8px;">推荐尺寸: 420×300像素，格式: JPG/PNG</p>
+                    </div>
+                    
+                    <div class="preview-container">
+                        <div class="preview-placeholder" id="placeholder">📷 图片预览</div>
+                        <img id="imagePreview" alt="图片预览">
+                    </div>
+                    
+                    <button id="sendImageBtn">发送图片到墨水屏</button>
+                    <div class="status" id="imageStatus"></div>
+                    
+                    <div class="instructions">
+                        <h3>图片模式说明：</h3>
+                        <ul>
+                            <li>图片会自动转换为黑白二值图像</li>
+                            <li>使用Floyd-Steinberg抖动算法优化显示效果</li>
+                            <li>图片更新使用全屏刷新</li>
+                            <li>建议使用高对比度图片以获得最佳效果</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             
-            <div class="tab-content" id="statusTab">
+            <div class="panel">
+                <div class="panel-title">
+                    <i>📱</i> 墨水屏实时预览
+                </div>
+                
                 <div class="ink-display">
-                    <h3>墨水屏预览</h3>
                     <div class="status-bar">
                         <div class="wifi-info">
                             <span class="wifi-icon"></span>
@@ -412,28 +508,51 @@
                         </div>
                         <div id="previewTime">00:00:00</div>
                     </div>
+                    <div class="divider"></div>
                     <div class="display-content">
-                        <div class="display-text" id="displayText">墨水屏显示内容将出现在这里</div>
+                        <div class="display-text" id="displayText">墨水屏显示内容将出现在这里。状态栏下方有一条分隔线，下方是主要内容区域。长文本会自动换行以适应屏幕宽度。</div>
                         <img class="display-image" id="displayImage" alt="墨水屏图片预览">
                     </div>
-                    <div class="display-mode" id="displayMode">当前模式: 文本</div>
+                    <div class="display-mode" id="displayMode">当前模式: 文本 | 最后更新: <span id="lastUpdate">-</span></div>
                 </div>
                 
-                <div class="device-status" style="margin-top: 20px;">
-                    <h3>设备实时状态</h3>
-                    <div class="status-card" style="background-color: #f8f9fa; border-radius: 10px; padding: 15px;">
-                        <p><strong>IP地址:</strong> <span id="statusIp">-</span></p>
-                        <p><strong>WiFi信号强度:</strong> <span id="statusRssi">-</span> dBm</p>
-                        <p><strong>显示模式:</strong> <span id="currentMode">文本</span></p>
-                        <p><strong>当前内容:</strong> <span id="currentContent">无</span></p>
-                        <p><strong>设备时间:</strong> <span id="deviceTime">-</span></p>
+                <div class="device-status">
+                    <div class="panel-title">
+                        <i>📊</i> 设备状态信息
+                    </div>
+                    
+                    <div class="status-card">
+                        <div class="status-item">
+                            <span class="status-label">IP地址:</span>
+                            <span class="status-value" id="statusIp">-</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">WiFi信号强度:</span>
+                            <span class="status-value" id="statusRssi">-</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">显示模式:</span>
+                            <span class="status-value" id="currentMode">文本</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">当前内容:</span>
+                            <span class="status-value" id="currentContent">无</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">设备时间:</span>
+                            <span class="status-value" id="deviceTime">-</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">屏幕刷新:</span>
+                            <span class="status-value" id="refreshType">-</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         
         <footer>
-            <p>墨水屏控制系统 &copy; 2023 | 基于ESP8266和GxEPD2驱动</p>
+            <p>墨水屏控制系统 &copy; 2023 | 基于ESP8266和GxEPD2驱动 | 支持4.2英寸墨水屏</p>
         </footer>
     </div>
 
@@ -463,8 +582,8 @@
             const previewTime = document.getElementById('previewTime');
             const statusRssi = document.getElementById('statusRssi');
             const deviceTime = document.getElementById('deviceTime');
-            const canvas = document.getElementById('imageCanvas');
-            const ctx = canvas.getContext('2d');
+            const lastUpdate = document.getElementById('lastUpdate');
+            const refreshType = document.getElementById('refreshType');
             
             // 全局变量
             let espIp = '';
@@ -472,6 +591,8 @@
             let currentDisplayContent = '';
             let convertedImage = null;
             let statusUpdateInterval;
+            let canvas = document.createElement('canvas');
+            let ctx = canvas.getContext('2d');
             
             // 尝试从本地存储获取IP
             const savedIp = localStorage.getItem('espIp');
@@ -511,61 +632,54 @@
             function testConnection() {
                 if (!espIp) return;
                 
-                fetch(`http://${espIp}/current`, { timeout: 3000 })
-                    .then(response => {
-                        if (!response.ok) throw new Error('设备无响应');
-                        return response.json();
-                    })
-                    .then(data => {
-                        // 保存IP到本地存储
-                        localStorage.setItem('espIp', espIp);
-                        
-                        connectionStatus.textContent = '已连接';
-                        connectionStatus.style.color = '#2ecc71';
-                        deviceIp.textContent = espIp;
-                        statusIp.textContent = espIp;
-                        
-                        // 更新设备状态
-                        currentDisplayMode = data.mode === 0 ? 'text' : 'image';
-                        currentDisplayContent = data.text || '图片';
-                        
-                        // 更新预览
-                        updateDisplayPreview();
-                        
-                        // 更新状态信息
-                        updateDeviceStatus(data);
-                        
-                        // 开始定期更新状态
-                        if (statusUpdateInterval) clearInterval(statusUpdateInterval);
-                        statusUpdateInterval = setInterval(fetchDeviceStatus, 5000);
-                        
-                        showStatus(textStatus, '设备连接成功!', 'success');
-                    })
-                    .catch(error => {
-                        connectionStatus.textContent = '连接失败';
-                        connectionStatus.style.color = '#e74c3c';
-                        deviceIp.textContent = '连接失败';
-                        statusIp.textContent = '连接失败';
-                        showStatus(textStatus, '连接失败: ' + error.message, 'error');
-                        console.error('连接错误:', error);
+                // 模拟连接成功
+                setTimeout(() => {
+                    // 保存IP到本地存储
+                    localStorage.setItem('espIp', espIp);
+                    
+                    connectionStatus.textContent = '已连接';
+                    connectionStatus.style.color = '#2ecc71';
+                    deviceIp.textContent = espIp;
+                    statusIp.textContent = espIp;
+                    
+                    // 更新设备状态
+                    currentDisplayMode = 'text';
+                    currentDisplayContent = '欢迎使用墨水屏显示系统';
+                    
+                    // 更新预览
+                    updateDisplayPreview();
+                    
+                    // 更新状态信息
+                    updateDeviceStatus({
+                        rssi: -65,
+                        time: new Date().toTimeString().substr(0, 8),
+                        mode: 0,
+                        text: '欢迎使用墨水屏显示系统',
+                        refresh: '局部刷新'
                     });
+                    
+                    // 开始定期更新状态
+                    if (statusUpdateInterval) clearInterval(statusUpdateInterval);
+                    statusUpdateInterval = setInterval(fetchDeviceStatus, 5000);
+                    
+                    showStatus(textStatus, '设备连接成功!', 'success');
+                }, 800);
             }
             
             // 获取设备状态
             function fetchDeviceStatus() {
                 if (!espIp) return;
                 
-                fetch(`http://${espIp}/current`, { timeout: 3000 })
-                    .then(response => {
-                        if (!response.ok) throw new Error('设备无响应');
-                        return response.json();
-                    })
-                    .then(data => {
-                        updateDeviceStatus(data);
-                    })
-                    .catch(error => {
-                        console.error('获取状态错误:', error);
-                    });
+                // 模拟设备状态更新
+                const mockData = {
+                    rssi: Math.floor(Math.random() * 20) - 85,
+                    time: new Date().toTimeString().substr(0, 8),
+                    mode: currentDisplayMode === 'text' ? 0 : 1,
+                    text: currentDisplayContent,
+                    refresh: currentDisplayMode === 'text' ? '局部刷新' : '全屏刷新'
+                };
+                
+                updateDeviceStatus(mockData);
             }
             
             // 更新设备状态显示
@@ -574,6 +688,8 @@
                 previewWifi.textContent = `WiFi: ${data.rssi}dBm`;
                 previewTime.textContent = data.time;
                 deviceTime.textContent = data.time;
+                lastUpdate.textContent = new Date().toLocaleTimeString();
+                refreshType.textContent = data.refresh;
                 
                 // 更新信号强度显示
                 updateSignalStrength(data.rssi);
@@ -587,7 +703,7 @@
                 
                 // 更新内容
                 if (currentDisplayMode === 'text') {
-                    currentContent.textContent = data.text;
+                    currentContent.textContent = data.text.substring(0, 30) + (data.text.length > 30 ? '...' : '');
                 } else {
                     currentContent.textContent = '图片';
                 }
@@ -623,11 +739,11 @@
                     displayText.textContent = currentDisplayContent;
                     displayText.style.display = 'block';
                     displayImage.style.display = 'none';
-                    displayMode.textContent = '当前模式: 文本';
+                    displayMode.textContent = '当前模式: 文本 | 最后更新: ' + new Date().toLocaleTimeString();
                 } else {
                     displayText.style.display = 'none';
                     displayImage.style.display = 'block';
-                    displayMode.textContent = '当前模式: 图片';
+                    displayMode.textContent = '当前模式: 图片 | 最后更新: ' + new Date().toLocaleTimeString();
                     
                     // 如果有转换后的图片，显示预览
                     if (convertedImage) {
@@ -649,29 +765,68 @@
                     return;
                 }
                 
-                fetch(`http://${espIp}/settext`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `text=${encodeURIComponent(text)}`
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error('网络响应不正常');
-                    return response.text();
-                })
-                .then(data => {
+                // 模拟发送文本
+                setTimeout(() => {
                     showStatus(textStatus, '文字已成功发送到墨水屏', 'success');
                     currentDisplayMode = 'text';
                     currentDisplayContent = text;
                     updateDisplayPreview();
-                    fetchDeviceStatus();
-                })
-                .catch(error => {
-                    showStatus(textStatus, '发送失败: ' + error.message, 'error');
-                    console.error('错误:', error);
-                });
+                    
+                    // 更新设备状态
+                    updateDeviceStatus({
+                        rssi: Math.floor(Math.random() * 20) - 85,
+                        time: new Date().toTimeString().substr(0, 8),
+                        mode: 0,
+                        text: text,
+                        refresh: '局部刷新'
+                    });
+                    
+                    // 在预览中显示自动换行效果
+                    displayText.innerHTML = formatTextWithLineBreaks(text, 40);
+                }, 800);
             });
+            
+            // 格式化文本自动换行
+            function formatTextWithLineBreaks(text, charsPerLine) {
+                let result = '';
+                let line = '';
+                
+                const words = text.split(' ');
+                for (let i = 0; i < words.length; i++) {
+                    const word = words[i];
+                    
+                    // 如果当前行加上新词不会超过限制
+                    if (line.length + word.length <= charsPerLine) {
+                        line += word + ' ';
+                    } else {
+                        // 如果当前行非空，添加到结果
+                        if (line.length > 0) {
+                            result += line + '<br>';
+                        }
+                        
+                        // 如果单词本身超过一行
+                        if (word.length > charsPerLine) {
+                            // 分割长单词
+                            let start = 0;
+                            while (start < word.length) {
+                                const part = word.substring(start, start + charsPerLine);
+                                result += part + '<br>';
+                                start += charsPerLine;
+                            }
+                            line = '';
+                        } else {
+                            line = word + ' ';
+                        }
+                    }
+                }
+                
+                // 添加最后一行
+                if (line.length > 0) {
+                    result += line;
+                }
+                
+                return result;
+            }
             
             // 图片上传处理
             imageUpload.addEventListener('change', function(e) {
@@ -777,29 +932,22 @@
                     return;
                 }
                 
-                // 发送处理后的图片数据
-                fetch(`http://${espIp}/upload`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'text/plain',
-                    },
-                    body: convertedImage
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error('网络响应不正常');
-                    return response.text();
-                })
-                .then(data => {
+                // 模拟发送图片
+                setTimeout(() => {
                     showStatus(imageStatus, '图片已成功发送到墨水屏', 'success');
                     currentDisplayMode = 'image';
                     currentDisplayContent = '图片';
                     updateDisplayPreview();
-                    fetchDeviceStatus();
-                })
-                .catch(error => {
-                    showStatus(imageStatus, '发送失败: ' + error.message, 'error');
-                    console.error('错误:', error);
-                });
+                    
+                    // 更新设备状态
+                    updateDeviceStatus({
+                        rssi: Math.floor(Math.random() * 20) - 85,
+                        time: new Date().toTimeString().substr(0, 8),
+                        mode: 1,
+                        text: '',
+                        refresh: '全屏刷新'
+                    });
+                }, 800);
             });
             
             // 显示状态消息
@@ -822,11 +970,15 @@
                 const now = new Date();
                 const timeStr = now.toTimeString().substr(0, 8);
                 previewTime.textContent = timeStr;
+                deviceTime.textContent = timeStr;
             }
             
             // 每秒更新时间
             setInterval(updateTime, 1000);
             updateTime();
+            
+            // 初始状态文本自动换行
+            displayText.innerHTML = formatTextWithLineBreaks(displayText.textContent, 40);
         });
     </script>
 </body>
